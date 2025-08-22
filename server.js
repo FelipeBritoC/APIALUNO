@@ -81,6 +81,18 @@ app.post("/alunos", (req, res)=>{
     alunos.push(novoAluno)
     res.status(201).json({msg:"Aluno criado com sucesso"})
 })
+app.delete("/alunos/:id", (req, res)=> {
+    const id = Number (req.params.id)
+    const indice = alunos.findIndex((aluno)=>{
+        aluno.id===id
+    })
+    if (indice === -1){
+        return res.status(404).json({msg:"Aluno não encontrado ou já foi deletado!"})
+    }
+    console.log(indice)
+    alunos.splice(indice,1)
+    res.status(204).json({msg:"Deletado com sucesso"})
+})
 app.listen(PORT, ()=>{
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 })
